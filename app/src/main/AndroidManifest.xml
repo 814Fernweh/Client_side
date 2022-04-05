@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 百度地图权限 -->
+    <!--以下权限与application标签是平级的-->
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!--读取手机状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+<!--    rxpermissions2的权限-->
+    <!-- protection level is dangerous, need request runtime permission -->
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+
+    <!-- 授予程序可以向SD卡中保存文件的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 授予程序使用摄像头的权限 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<!--    照相机权限-->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!-- app闪退 加name= -->
+<!--    在vaules文件夹下的app_name  ic_launcher等 icon是应用图标 label应用名称-->
+<!--    @mipmap/ic_launcher 资源引用方式-->
+    <application
+        android:name="com.example.myapplication.common.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        android:networkSecurityConfig="@xml/network_security_config"
+        >
+<!--  百度地图秘钥-->
+        <meta-data android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Mun7ExRNn7wI2HxISp6SE3N71lQIlnuE"/>
+
+<!--        <activity android:name=".SwitchActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+        <!--百度定位服务  这个服务也是放在application标签下的-->
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+
+<!--所有活动都要在manifests中注册才能生效-->
+<!--    员工登录app-->
+<!--        name 哪一个活动-->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+
+<!--      员工地理位置获取  -->
+<!--        <intent-filter> 配置主活动-->
+
+        <!--      获取摄像头权限 拍照 -->
+        <!--        <intent-filter> 配置主活动-->
+
+
+        <provider
+            android:authorities="com.example.myapplication.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
+
+    </application>
+
+</manifest>
