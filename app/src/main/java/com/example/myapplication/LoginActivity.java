@@ -70,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
                     String loginPwd = passwordEdit.getText().toString().trim();
 
                     if (TextUtils.isEmpty(account)) {
-                        Toast.makeText(LoginActivity.this,"请输入用户名",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"Please enter your username",Toast.LENGTH_SHORT).show();
                     }
                     if (TextUtils.isEmpty(loginPwd)) {
-                        Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"Please enter your password",Toast.LENGTH_SHORT).show();
                     }
                     HttpParams params=new HttpParams();
                     // 服务器端的对应名字

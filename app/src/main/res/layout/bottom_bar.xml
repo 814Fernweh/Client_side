@@ -111,14 +111,5 @@
 
     </LinearLayout>
 
-<!--    <LinearLayout-->
-<!--        android:orientation="vertical"-->
-<!--        android:background="@android:color/white"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
-<!--        &lt;!&ndash;    &lt;!&ndash;标题栏&ndash;&gt;&ndash;&gt;-->
-<!--        &lt;!&ndash;    <include layout="@layout/main_title_bar" />&ndash;&gt;-->
-
-<!--    </LinearLayout>-->
 
 </LinearLayout>

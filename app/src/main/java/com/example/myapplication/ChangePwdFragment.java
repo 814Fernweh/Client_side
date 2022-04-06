@@ -82,19 +82,19 @@ public class ChangePwdFragment extends Fragment {
                     String confirmPWD = edit_change_pwd11.getText().toString().trim();
                     // 提示用户输入所有信息
                     if (TextUtils.isEmpty(inilPWD)) {
-                        Toast.makeText(getActivity(),"请输入原密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Please enter the original password",Toast.LENGTH_SHORT).show();
                     }
                     if (TextUtils.isEmpty(newPWD)) {
-                        Toast.makeText(getActivity(),"请输入新密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Please enter the new password",Toast.LENGTH_SHORT).show();
                     }
                     if (TextUtils.isEmpty(confirmPWD)) {
-                        Toast.makeText(getActivity(),"请第二次输入新密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Please confirm the password",Toast.LENGTH_SHORT).show();
                     }
                     if(!inilPWD.equals(password)){
-                        Toast.makeText(getActivity(),"请正确输入原密码",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Please enter the original password correctly",Toast.LENGTH_SHORT).show();
                     }
                     if(!newPWD.equals(confirmPWD)){
-                        Toast.makeText(getActivity(),"两次输入密码不一致",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"Two times to enter the password does not match",Toast.LENGTH_SHORT).show();
 
                     }
                     // 原密码对了  两次密码也一致了
@@ -115,7 +115,6 @@ public class ChangePwdFragment extends Fragment {
                 }
             }
         });
-
 
         return view;
     }
@@ -140,7 +139,7 @@ public class ChangePwdFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String BaseURL = "http://192.168.1.104:8081/employee/changePwd";
+                String BaseURL = "http://192.168.1.102:8081/employee/changePwd";
                 JsonObject data = new JsonObject();
                 data.addProperty("eID", eID);
                 data.addProperty("newpwd",newpwd);
@@ -159,9 +158,9 @@ public class ChangePwdFragment extends Fragment {
                     // map的key是日期 value是具体的record记录  没有的话就是null
                     // 服务器端 传回来的week数据  把上面的map转成json格式了
                     map = gson.fromJson(responseData, map.getClass());// 对了
-                    System.out.println("map的值为:"+map);
+//                    System.out.println("map的值为:"+map);
                     String msg= (String) map.get("pwdMsg");
-                    System.out.println("map的值为:"+msg);  // msg已经成功取到相应的提示用户信息 attendance success
+            //        System.out.println("map的值为:"+msg);  // msg已经成功取到相应的提示用户信息 attendance success
                     // 子线程 中显示toast
                     Looper.prepare();
                     Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
@@ -169,9 +168,6 @@ public class ChangePwdFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
             }
 
         }).start();

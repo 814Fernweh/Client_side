@@ -54,9 +54,7 @@ public class WeekFragment extends Fragment {
     ListView listView;
     SimpleAdapter adapter;
 
-
     List<Map<String, Object>> listitem= new ArrayList<Map<String, Object>>(); //存储数据的数组列表
-   // int[] image_expense = new int[]{R.mipmap.detail_income, R.mipmap.detail_payout }; //存储图片
 
     public WeekFragment() {
         // Required empty public constructor
@@ -105,6 +103,7 @@ public class WeekFragment extends Fragment {
                         // 第五个是用于指定在布局文件中定义的id（也是用数组来指定）
                         // week.xml 里面
                         listView = (ListView) v.findViewById(R.id.lv_expense);
+//                        listView.addHeaderView();
                         listView.setAdapter(adapter);
 
                         break;
@@ -151,13 +150,11 @@ public class WeekFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-
-                String BaseURL = "http://192.168.1.104:8081/attendance/clientSearchWeekData";
-
+                String BaseURL = "http://192.168.1.102:8081/attendance/clientSearchWeekData";
+                // 传给服务器端的参数
                 JsonObject data = new JsonObject();
                 data.addProperty("eID", eID);
                 data.addProperty("flag",flag);
-                //   System.out.println(data.toString());
 
                 try {
                     OkHttpClient client = new OkHttpClient();
@@ -184,16 +181,9 @@ public class WeekFragment extends Fragment {
                         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
                         String date_str = sdf.format(today);
                         Date date =sdf.parse(date_str);
-
                         for (int i = 6; i >= 0; i--) {
                             pastDaysList.add(getPastDate(i,date));
                         }
-
-//                        Date today = new Date(); // 今天！
-//                        DateFormat day = DateFormat.getDateInstance() ;
-//                        //我这里传来的时间是个string类型的，所以要先转为date类型的
-//                        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-//                        Date date =sdf.parse(day.format(today));
 
                     }catch (ParseException e){
                         e.printStackTrace();
@@ -236,8 +226,6 @@ public class WeekFragment extends Fragment {
                     Message message=new Message();
                     message.what=1;
                     handler.sendMessage(message);
-
-
                     System.out.println("listiem的值为:"+listitem);
 
 
@@ -250,7 +238,7 @@ public class WeekFragment extends Fragment {
             }
 
         }).start();
-//        return listitem;
+//
     }
 
 

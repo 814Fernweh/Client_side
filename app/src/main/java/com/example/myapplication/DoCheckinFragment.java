@@ -318,7 +318,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String BaseURL = "http://192.168.1.104:8081/attendance/getData";
+                String BaseURL = "http://192.168.1.102:8081/attendance/getData";
                 byte[] buffer=readPicture(jpegFile);
                 byte[] encode = Base64.encode(buffer, Base64.DEFAULT);
 
@@ -346,9 +346,9 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
                     Gson gson = new Gson();
                     Map<String, Object> map = new HashMap<String, Object>();
                     map = gson.fromJson(responseData, map.getClass());
-                    System.out.println("map的值为:"+map);
+//                    System.out.println("map的值为:"+map);
                     String msg= (String) map.get("msg");
-                    System.out.println("map的值为:"+msg);  // msg已经成功取到相应的提示用户信息 attendance success
+              //      System.out.println("map的值为:"+msg);  // msg已经成功取到相应的提示用户信息 attendance success
                     // 子线程 中显示toast
                     Looper.prepare();
                     Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
@@ -446,7 +446,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
                                 grantedPermissionNum++;
                             } else if (permission.shouldShowRequestPermissionRationale) {
                             } else {
-                                Toast.makeText(mContext, "定位服务需要您同意相关权限", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Location services require you to agree to the relevant permissions", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

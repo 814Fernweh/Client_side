@@ -137,7 +137,7 @@ public class MeFragment extends Fragment  {
                  //定义一个新的对话框对象
                  AlertDialog.Builder alertdialogbuilder=new AlertDialog.Builder(getActivity());
                  //设置对话框提示内容
-                 alertdialogbuilder.setMessage("确定要退出程序吗？");
+                 alertdialogbuilder.setMessage("Are you sure you want to exit the program?");
                  //定义对话框2个按钮标题及接受事件的函数
                  alertdialogbuilder.setPositiveButton("Yes",click1);
                  alertdialogbuilder.setNegativeButton("No",click2);

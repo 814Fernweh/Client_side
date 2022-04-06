@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="修改密码"
+                android:text="CHANGE PASSWORD"
                 android:textSize="25dp"/>
 
         </LinearLayout>
@@ -43,14 +43,14 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="密        码："/>
+                android:text="old ："/>
 
             <EditText
                 android:id="@+id/edit_init_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="请输入原密码"/>
+                android:hint="original password"/>
         </LinearLayout>
 
 <!--        新密码-->
@@ -63,14 +63,14 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="新密码："/>
+                android:text="new ："/>
 
             <EditText
                 android:id="@+id/edit_change_pwd00"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="请输入新的密码"/>
+                android:hint="new password"/>
         </LinearLayout>
 
 
@@ -84,14 +84,14 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="确认密码："/>
+                android:text="confirm："/>
 
             <EditText
                 android:id="@+id/edit_change_pwd11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="请输入确认密码"/>
+                android:hint="confirm it"/>
         </LinearLayout>
 
 
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textSize="20sp"
-            android:text="提交修改"/>
+            android:text="commit"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textSize="20sp"
-                android:text="返回个人中心"/>
+                android:text="Back"/>
         </LinearLayout>
 
     </LinearLayout>

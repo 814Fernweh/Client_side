@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="个人信息"
+                android:text="PERSONAL CENTER"
                 android:textSize="25dp"/>
 
         </LinearLayout>
@@ -42,7 +42,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="工        号："/>
+                android:text="ID："/>
 
             <TextView
                 android:id="@+id/text_eid"
@@ -62,7 +62,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="姓        名："/>
+                android:text="name："/>
 
             <TextView
                 android:id="@+id/text_name"
@@ -81,7 +81,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="年        龄："/>
+                android:text="age ："/>
 
             <TextView
                 android:id="@+id/text_age"
@@ -100,7 +100,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="性        别："/>
+                android:text="gender："/>
 
             <TextView
                 android:id="@+id/text_gender"
@@ -120,7 +120,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="工作部门："/>
+                android:text="department"/>
 
             <TextView
                 android:id="@+id/text_did"
@@ -141,7 +141,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="手        机："/>
+                android:text="tele："/>
 
             <TextView
                 android:id="@+id/text_tele"
@@ -156,7 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textSize="20sp"
-            android:text="修改密码"/>
+            android:text="change password"/>
 
 
 
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textSize="20sp"
-                android:text="退出登录"/>
+                android:text="log out"/>
 
         </LinearLayout>
 
