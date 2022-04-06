@@ -52,6 +52,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         mFragmentList.add(weekFragment);
         mFragmentList.add(monthFragment);
 
+
         mFragmentAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), mFragmentList);
         vp.setOffscreenPageLimit(2);//ViewPager的缓存为2帧
         vp.setAdapter(mFragmentAdapter);

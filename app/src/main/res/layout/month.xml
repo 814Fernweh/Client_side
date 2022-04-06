@@ -15,6 +15,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Date"/>
+
             <TextView
                 android:layout_width="215dp"
                 android:layout_height="wrap_content"

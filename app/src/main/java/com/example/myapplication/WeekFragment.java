@@ -156,6 +156,7 @@ public class WeekFragment extends Fragment {
                 data.addProperty("eID", eID);
                 data.addProperty("flag",flag);
 
+
                 try {
                     OkHttpClient client = new OkHttpClient();
                     MediaType JSONType = MediaType.parse("application/json; charset=utf-8");
