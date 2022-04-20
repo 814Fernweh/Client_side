@@ -61,7 +61,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
     private Context mContext;
     private RxPermissions rxPermissions;
 
-    //从MainActivity里面得到手机号和eID
+    //get tele and eId from MainActivity
     String telephone;
     Integer eID;
 
@@ -71,9 +71,9 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
 
     private int grantedPermissionNum = 0;
 
-    private Camera camera;                                  //定义相机对象
+    private Camera camera;
     private SurfaceHolder sh;
-    private boolean isPreview = false;                     //定义非预览状态
+    private boolean isPreview = false;     //Defining non-preview states
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,28 +81,21 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
 
         View view = View.inflate(getActivity(),R.layout.fragment_checkin,null);
 
-        // 自己加的 用户名 密码
-//        Intent intent=getIntent();
-//        // intent 没起作用
-//        telephone=intent.getStringExtra("telephone");
-//        eID=intent.getIntExtra("eID",0);
         // 解决intent无效问题   https://blog.csdn.net/weixin_45068278/article/details/117676637
         telephone= getActivity().getIntent().getStringExtra("telephone");
         eID= getActivity().getIntent().getIntExtra("eID",0);
 
-
         mapDataInit();
 
         textMapInfo = (TextView)view.findViewById(R.id.textMapInfo);
-        //获取SurfaceView组件，用于显示摄像头预览
+        //Get the SurfaceView component to display the camera preview
         SurfaceView sv = (SurfaceView) view.findViewById(R.id.surfaceView);
-        sh = sv.getHolder();              //获取SurfaceHolder对象
-        //设置该SurfaceHolder自己不维护缓冲
+        sh = sv.getHolder();
         sh.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        Button preview =  view.findViewById(R.id.preview);                  //获取“预览”按钮
-        Button takePicture =  view.findViewById(R.id.btnTakePhoto);//获取“拍照”按钮
+        Button preview =  view.findViewById(R.id.preview);                  //preview
+        Button takePicture =  view.findViewById(R.id.btnTakePhoto);// take photo
 
-        preview.setOnClickListener(new View.OnClickListener() {         //实现摄像头预览功能
+        preview.setOnClickListener(new View.OnClickListener() {         //Implementing the camera preview function
             @Override
             public void onClick(View v) {
                 previewOnClick(v);
@@ -147,9 +140,9 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onPause() {
-        if (camera != null) {                         //如果摄像头不为空
-            camera.stopPreview();                     //停止预览
-            camera.release();                          //释放资源
+        if (camera != null) {            //If the camera is not empty
+            camera.stopPreview();
+            camera.release();
         }
         super.onPause();
     }
@@ -163,7 +156,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
 
 
     /**
-     * 获取前置摄像头
+     * Get the front camera
      * @return
      */
     public Camera getFrontCamera() {
@@ -176,7 +169,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
             if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
                 try {
                     camera = Camera.open(i);
-                    camera.setDisplayOrientation(90);  // 旋转90度
+                    camera.setDisplayOrientation(90);  // rotate
                 } catch (RuntimeException e) {
                     e.printStackTrace();
                 }
@@ -185,91 +178,90 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
         return camera;
     }
 
-    private void resetCamera() {        //创建resetCamera()方法，实现重新预览功能
-        if (!isPreview) {                //如果为非预览模式
-            camera.startPreview();       //开启预览
+    private void resetCamera() {        //Create resetCamera() method for re-preview function
+        if (!isPreview) {
+            camera.startPreview();
             isPreview = true;
         }
     }
 
     public void previewOnClick(View v) {
-        // 如果摄像头为非预览模式，则打开相机
+        // If the camera is in non-preview mode, turn on the camera
         if (!isPreview) {
-            camera = getFrontCamera();                //打开相机
-            isPreview = true;                       //设置为预览状态
+            camera = getFrontCamera();                //open the front camera
+            isPreview = true;
         }
         try {
-            camera.setPreviewDisplay(sh);           //设置用于显示预览的SurfaceView
-            Camera.Parameters parameters = camera.getParameters();  //获取相机参数
-            parameters.setPictureFormat(PixelFormat.JPEG);    //指定图片为JPEG图片
-            parameters.set("jpeg-quality", 80);   //设置图片的质量
-            camera.setParameters(parameters);      //重新设置相机参数
-            camera.startPreview();                  //开始预览
-            camera.autoFocus(null);                 //设置自动对焦
-        } catch (IOException e) {                   //输出异常信息
+            camera.setPreviewDisplay(sh);
+            Camera.Parameters parameters = camera.getParameters();  //Get camera parameters
+            parameters.setPictureFormat(PixelFormat.JPEG);
+            parameters.set("jpeg-quality", 80);   //Set the quality of the image
+            camera.setParameters(parameters);      //Resetting the camera parameters
+            camera.startPreview();
+            camera.autoFocus(null);                 //Setting the autofocus
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
     public void takePictureonClick(View v) {
-        if (camera != null) {                          //相机不为空
-            camera.takePicture(null, null, cameraCallBack);    //进行拍照
+        if (camera != null) {
+            camera.takePicture(null, null, cameraCallBack);
         }
     }
 
-    //实现将照片保存到系统图库中
-    final Camera.PictureCallback cameraCallBack = new Camera.PictureCallback() {  //照片回调函数
+    // Save photos to the system gallery
+    final Camera.PictureCallback cameraCallBack = new Camera.PictureCallback() {  //Photo callback function
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
-            // 根据拍照所得的数据创建位图
+            // Create a bitmap from the data obtained from the photo
             final Bitmap bm = BitmapFactory.decodeByteArray(data, 0,
                     data.length);
-            camera.stopPreview();                                          //停止预览
-            isPreview = false;                                             //设置为非预览状态
+            camera.stopPreview();
+            isPreview = false;
             //获取sd卡根目录
             File appDir = new File(Environment.getExternalStorageDirectory(), "/DCIM/Camera/");
-            if (!appDir.exists()) {                   //如果该目录不存在
-                appDir.mkdir();                        //创建该目录
+            if (!appDir.exists()) {                   //If the directory does not exist
+                appDir.mkdir();                        //create
             }
             //将获取的当前系统时间设置为照片名称
             String fileName = System.currentTimeMillis() + ".jpg";
-            File file = new File(appDir, fileName);  	//创建文件对象
+            File file = new File(appDir, fileName);
             try {  //保存拍到的图片
-                FileOutputStream fos = new FileOutputStream(file); //创建一个文件输出流对象
-                //将图片内容压缩为JPEG格式输出到输出流对象中
+                FileOutputStream fos = new FileOutputStream(file); //Create a file output stream object
+                //compress image content into JPEG format for output stream object
                 bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                //将缓冲区中的数据全部写出到输出流中
+                //Write out all the data in the buffer to the output stream
                 fos.flush();
-                fos.close();                            //关闭文件输出流对象
+                fos.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            //将照片插入到系统图库
+            //Inserting photos into the system gallery
             try {
                 MediaStore.Images.Media.insertImage(getActivity().getContentResolver(),
                         file.getAbsolutePath(), fileName, null);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            //最后通知图库更新
+
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri uri = Uri.fromFile(file);
 
 
             intent.setData(uri);
-            getActivity().sendBroadcast(intent);   //这个广播的目的就是更新图库
-            //    Toast.makeText(DoCheckInActivity.this, "照片保存至：" + file, Toast.LENGTH_LONG).show();
-            resetCamera();                                //调用重新预览resetCamera()方法
+            getActivity().sendBroadcast(intent);
+            resetCamera();
             upload(file.getAbsolutePath());
         }
     };
 
 
     public byte[] readPicture(String jpegFile){
-        //     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
+
         File jpeg=new File(jpegFile);
         long fileSize = jpeg.length();
         try {
@@ -318,7 +310,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String BaseURL = "http://192.168.1.102:8081/attendance/getData";
+                String BaseURL = "http://192.168.1.107:8081/attendance/getData";
                 byte[] buffer=readPicture(jpegFile);
                 byte[] encode = Base64.encode(buffer, Base64.DEFAULT);
 
@@ -337,19 +329,18 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
                 try {
                     OkHttpClient client = new OkHttpClient();
                     MediaType JSONType = MediaType.parse("application/json; charset=utf-8");
-                    //   RequestBody requestBody = RequestBody.create(JSONType, String.valueOf(data));
                     RequestBody requestBody = new FormBody.Builder().add("JsonData", data.toString()).build();
                     Request request = new Request.Builder().url(BaseURL).post(requestBody).build();
-                    Response response = client.newCall(request).execute();  // 发送请求 获取服务器返回的数据
+                    Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
-                    //string转map
+
                     Gson gson = new Gson();
                     Map<String, Object> map = new HashMap<String, Object>();
                     map = gson.fromJson(responseData, map.getClass());
 //                    System.out.println("map的值为:"+map);
                     String msg= (String) map.get("msg");
-              //      System.out.println("map的值为:"+msg);  // msg已经成功取到相应的提示用户信息 attendance success
-                    // 子线程 中显示toast
+              //      System.out.println("map的值为:"+msg);
+
                     Looper.prepare();
                     Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
                     Looper.loop();
@@ -372,12 +363,12 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
     }
 
     /**
-     * 定时更新位置（每隔5s）
+     * Timed position update (every 5s)
      */
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(5000);
-        //显示详细地址信息
+        //Show detailed address information
         option.setIsNeedAddress(true);
         //  option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         mLocationClient.setLocOption(option);
@@ -385,7 +376,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
     }
 
     /**
-     * 开始定位
+     *  start location
      */
     private void startLocation() {
         initLocation();
@@ -400,7 +391,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
     }
 
     /**
-     * 获取定位信息的异步任务
+     * Asynchronous tasks for obtaining location information
      */
     class MyLocationAsyncTask extends AsyncTask<BDLocation, Void, String> {
         @Override
@@ -428,7 +419,7 @@ public class DoCheckinFragment extends Fragment implements View.OnClickListener,
     }
 
     /**
-     * 申请用户权限
+     * Request user rights
      */
     private void checkUserAllPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

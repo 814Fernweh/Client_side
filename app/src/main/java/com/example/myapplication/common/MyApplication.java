@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class MyApplication extends Application {
     private static  MyApplication context;
-    // 通过stack栈来管理activity
+    //Managing activities through the stack
     private static Stack<Activity> activityStack;
     @Override
     public void onCreate() {
@@ -18,7 +18,7 @@ public class MyApplication extends Application {
         return context;
     }
     /**
-     * add Activity 添加Activity到栈
+     * add Activity
      */
     public void addActivity(Activity activity) {
         if (activityStack == null) {

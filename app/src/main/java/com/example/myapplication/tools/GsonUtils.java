@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 
 
 public class GsonUtils<T> {
-    // json字符串转换成对象
     public static <T> T json2Object(String json, Class<T> classOfT) {
         if (TextUtils.isEmpty(json)) {
             return null;
@@ -21,7 +20,7 @@ public class GsonUtils<T> {
     }
 
     /**
-     * 转成bean
+     * to bean
      *
      * @param gsonString
      * @param cls

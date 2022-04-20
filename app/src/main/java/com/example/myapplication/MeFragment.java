@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MeFragment extends Fragment  {
-    //从MainActivity里面得到手机号和eID
     String telephone,password,name;
     Integer eID,age,gender,did;
     private TextView text_eid,text_age,text_name,text_gender,text_did,text_tele;
@@ -45,7 +44,6 @@ public class MeFragment extends Fragment  {
         gender=getActivity().getIntent().getIntExtra("gender",0);
         did=getActivity().getIntent().getIntExtra("did",0);
         // 拿过来的intent都是对的
-
         text_eid = view.findViewById(R.id.text_eid);
         text_age = view.findViewById(R.id.text_age);
         text_name = view.findViewById(R.id.text_name);
@@ -58,39 +56,36 @@ public class MeFragment extends Fragment  {
         new MeAsyncTask().execute();
 
      //     https://blog.csdn.net/bfboys/article/details/53193034
-        // 修改密码按钮 点击后跳转到ChangePwdFragment  新的页面去修改密码
+        // Change Password button
+        // Click on it to jump to the new ChangePwdFragment page
+        // to change your password
         btn_changepwd.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                //4、如果接口成员变量不为空，则调用接口变量的方法。
                 if (onButtonClick != null) {
                     onButtonClick.onClick(btn_changepwd);
                 }
             }
          });
 
-        // 退出登录按钮   https://blog.csdn.net/dieni1979/article/details/101202906
+        // logout   https://blog.csdn.net/dieni1979/article/details/101202906
         btn_logout.setOnClickListener(new View.OnClickListener()  {
             @Override
             public void onClick(View v) {
-                //4、如果接口成员变量不为空，则调用接口变量的方法。
                 showdialog(v);
             }
         });
 
-
         return view;
     }
 
-    //定义接口变量的get方法
+
     public OnButtonClick getOnButtonClick() {
         return onButtonClick;
     }
-    //定义接口变量的set方法
     public  void setOnButtonClick(OnButtonClick onButtonClick) {
         this.onButtonClick = onButtonClick;
     }
-    //1、定义接口
     public interface OnButtonClick{
         public void onClick(View view);
     }
@@ -112,7 +107,6 @@ public class MeFragment extends Fragment  {
 
         @Override
         protected void onPostExecute(List<String> s) {
-            //   Toast.makeText(mContext, "地理位置已更新", Toast.LENGTH_SHORT).show();
 
             text_eid.setText(s.get(0));
             text_name.setText(s.get(1));
@@ -120,7 +114,7 @@ public class MeFragment extends Fragment  {
             if(s.get(3).equals("1")){
                 text_gender.setText("female");
             }
-            // 是0还是2？？？？？
+
             if(s.get(3).equals("0")){
                 text_gender.setText("male");
             }
@@ -134,14 +128,11 @@ public class MeFragment extends Fragment  {
 
 
     public void showdialog(View view) {
-                 //定义一个新的对话框对象
+
                  AlertDialog.Builder alertdialogbuilder=new AlertDialog.Builder(getActivity());
-                 //设置对话框提示内容
                  alertdialogbuilder.setMessage("Are you sure you want to exit the program?");
-                 //定义对话框2个按钮标题及接受事件的函数
                  alertdialogbuilder.setPositiveButton("Yes",click1);
                  alertdialogbuilder.setNegativeButton("No",click2);
-                 //创建并显示对话框
                  AlertDialog alertdialog1=alertdialogbuilder.create();
                  alertdialog1.show();
 
@@ -152,7 +143,7 @@ public class MeFragment extends Fragment  {
         @Override
         public void onClick(DialogInterface arg0,int arg1)
         {
-                     //当按钮click1被按下时执行结束进程
+          //当按钮click1被按下时执行结束进程
            android.os.Process.killProcess(android.os.Process.myPid());
         }
     };

@@ -1,15 +1,7 @@
 package com.example.myapplication;
 // https://blog.csdn.net/weixin_34232744/article/details/89614717  listview
 // https://bbs.csdn.net/topics/392036935  问题  还没用过
-/**
- * @programName: MonthFragment.java
- * @programFunction:
- * @createDate: 2022/01/25
- * @author: Ling Zhu
- * @version:
- * xx.   yyyy/mm/dd   ver    author    comments
- * 01.   2018/09/25   1.00   AnneHan   New Create
- */
+
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -53,7 +45,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 
-
 public class MonthFragment extends Fragment {
 
     Integer eID;
@@ -61,7 +52,7 @@ public class MonthFragment extends Fragment {
     ListView listView;
     SimpleAdapter adapter;
 
-    List<Map<String, Object>> listitem= new ArrayList<Map<String, Object>>(); //存储数据的数组列表
+    List<Map<String, Object>> listitem= new ArrayList<Map<String, Object>>();
 
     public MonthFragment() {
         // Required empty public constructor
@@ -107,12 +98,6 @@ public class MonthFragment extends Fragment {
     }
 
 
-    /**
-     * 获取过去第几天的日期
-     *
-     * @param past
-     * @return
-     */
     public static String getPastDate(int past, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -123,13 +108,12 @@ public class MonthFragment extends Fragment {
         return result;
     }
 
-    // 传入eid 和week=1 or month=2 作为参数flag去找考勤记录  如果是week 就返回当前日期所在周的
-    // month 就返回本月的
+
     public void sendSearchMonthRequestWithOkhttp(Integer eID,Integer flag) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String BaseURL = "http://192.168.1.102:8081/attendance/clientSearchMonthData";
+                String BaseURL = "http://192.168.1.107:8081/attendance/clientSearchMonthData";
                 // 传给服务器端的参数
                 JsonObject data = new JsonObject();
                 data.addProperty("eID", eID);
@@ -143,20 +127,16 @@ public class MonthFragment extends Fragment {
                     Request request = new Request.Builder().url(BaseURL).post(requestBody).build();
                     Response response = client.newCall(request).execute();  // 发送请求 获取服务器返回的数据
                     String responseData = response.body().string();   // 对了
-                    //string转map
+
                     Gson gson = new Gson();
                     Map<String, Object> map = new HashMap<String, Object>();
-                    // map的key是日期 value是具体的record记录  没有的话就是null
-                    // 服务器端 传回来的week数据  把上面的map转成json格式了
                     map = gson.fromJson(responseData, map.getClass());// 对了
-
-               //     System.out.println("map的值为:"+map);
 
                     // 这周的日期存放在weekDaysList中
                     ArrayList<String> pastDaysList = new ArrayList<>();
                     try {
                         Date today = new Date();
-                        //我这里传来的时间是个string类型的，所以要先转为date类型的。
+                        //这里传来的时间是个string类型的，所以要先转为date类型的。
                         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
                         String date_str = sdf.format(today);
                         Date date =sdf.parse(date_str);
@@ -197,7 +177,6 @@ public class MonthFragment extends Fragment {
                         listmap.put("checkarrive", allmonth.get(i));
                         listmap.put("checkleave", allmonth.get(i+1));
 
-
                         listitem.add(listmap);
                     }
                     Message message=new Message();
@@ -212,39 +191,4 @@ public class MonthFragment extends Fragment {
         }).start();
     }
 
-
-
-    /**
-     * 从数据库获得适配器数据
-     */
-//    private void getData(){
-//        //call DBOpenHelper
-//        DBOpenHelper helper = new DBOpenHelper(getActivity(),"qianbao.db",null,1);
-//        SQLiteDatabase db = helper.getWritableDatabase();
-//
-//        Cursor c = db.query("basicCode_tb",null,"userID=?",new String[]{"11111111111"},null,null,null);
-//        c.moveToFirst();
-//        int iColCount = c.getColumnCount();
-//        int iNumber = 0;
-//        String strType = "";
-//        while (iNumber < c.getCount()){
-//            Map<String, Object> map = new HashMap<String, Object>();
-//
-//            strType = c.getString(c.getColumnIndex("Type"));
-//            map.put("image_expense", image_expense[Integer.parseInt(strType)]);
-//            map.put("expense_category", c.getString(c.getColumnIndex("item")));
-//            if(strType.equals("0")){
-//                map.put("expense_money", "+" + c.getString(c.getColumnIndex("cost")));
-//            }else{
-//                map.put("expense_money", "-" + c.getString(c.getColumnIndex("cost")));
-//            }
-//
-//            c.moveToNext();
-//            listitem.add(map);
-//            iNumber++;
-//            System.out.println(listitem);
-//        }
-//        c.close();
-//        db.close();
-//    }
 }

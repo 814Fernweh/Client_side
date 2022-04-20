@@ -22,9 +22,10 @@ import okhttp3.Request;
 
 public class HttpTool {
 
-    // 将共用的网络操作写在一个类里 提供一个静态方法 当想要发起网络请求的时候，只需要简单调用这个static方法
+    // Write common network operations in a class Provide a static method
+    // Simply call this static method when you want to initiate a network request
     public static void postObject(final String url, HttpParams params, final Class classOfT, final HttpListener listener) {
-        CommonTool.showLog(url + "请求参数==" + getParam(params));
+        CommonTool.showLog(url + "parameter==" + getParam(params));
         OkGo.<String>post(UrlConfig.URL + url)
                 .params(params)
                 .execute(new StringCallback() {
@@ -37,13 +38,13 @@ public class HttpTool {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        listener.onFailed("网络链接失败,请检查网络！");
+                        listener.onFailed("Network link failed, please check network！");
                     }
 
                     @Override
                     public void onSuccess(Response<String> response) {
                         BaseBean appResObj = null;
-                        CommonTool.showLog("接口" + url + "===" + response.body());
+                        CommonTool.showLog("interface" + url + "===" + response.body());
                         try {
                             appResObj = (BaseBean) GsonUtils.json2Object(response.body(), classOfT);
                         } catch (Exception e) {
@@ -51,7 +52,7 @@ public class HttpTool {
                         }
                         if (listener != null) {
                             if (appResObj == null) {
-                                listener.onFailed("服务器忙请稍后再试");
+                                listener.onFailed("Please try again later as the server is busy\n");
                                 return;
                             }
                             if (appResObj.code == 0) {
@@ -85,15 +86,7 @@ public class HttpTool {
         void onFailed(String msg);
 
     }
-    // 线程的方式 实现okhttp
-    // okhttp3.Callback回调接口函数
-//    public static void sendOkHttpRequest(String address,okhttp3.Callback callback){
-//        OkHttpClient client=new OkHttpClient();
-//        Request request=new Request.Builder().url(address).build();
-//        client.newCall(request).enqueue(callback);  // enqueue 内部已经开好子线程了 在子线程中执行http请求 并将最后的结果回调到callback中
-//
-//
-//    }
+
 
 }
 

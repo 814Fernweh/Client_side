@@ -83,16 +83,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    /**
-     * 初始化布局View
-     */
-//    private void initViews() {
-//
-//    }
-
-    /**
-     * 点击头部Text 动态修改ViewPager的内容
-     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -126,11 +116,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    /**
-     * 由ViewPager的滑动修改头部导航Text的颜色
-     *
-     * @param position
-     */
     private void changeTextColor(int position) {
         if (position == 0) {
             item_detail.setTextColor(Color.parseColor("#1ba0e1"));

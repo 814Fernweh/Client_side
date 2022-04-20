@@ -31,24 +31,21 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommonTool {
-    // Android开发中，经常需要将少量简单类型数据保存在本地，
-    // 如：用户设置。这些需要保存的数据可能一两个字符串，像这样的数据一般选择使用SharedPreferences来保存
-    // 数据存储池
+    // Data storage pools
     public static SharedPreferences sp;
 
-    // logcat中显示test数据的 相当于log日志
+    // logcat displays test data in the equivalent of a logbook
     public static void showLog(String msg) {
         if (UrlConfig.LOG_FLAG && !TextUtils.isEmpty(msg)) {
             Log.e("test", msg);
         }
     }
-    // 弹出提示框 显示提示信息
+    //  Show alert message
     public static void showToast(String text){
         if(!TextUtils.isEmpty(text)){
             Toast.makeText(MyApplication.getContext(),text, Toast.LENGTH_SHORT).show();
         }
     }
-    // 时间格式转成String格式
     public static String timeToString(long time, String format) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
         return simpleDateFormat.format(new Date(time));
@@ -56,14 +53,13 @@ public class CommonTool {
 
     private static SharedPreferences getSp(){
         if (sp == null) {
-            //第一个参数是preferece的名称(比如：MyPref),第二个参数是打开的方式（一般选择private方式
             sp =MyApplication.getContext().getSharedPreferences("sports", Context.MODE_PRIVATE);
         }
         return sp;
     }
 
     public static void spPutString(String key, String value) {
-        //基于XML文件存储key-value键值对数据
+
         getSp().edit().putString(key,value).commit();
     }
 
@@ -90,17 +86,17 @@ public class CommonTool {
         layoutParams.dimAmount = 0.2f;
         window.setAttributes(layoutParams);
 
-        // 此处可以设置dialog显示的位置
+
         if (animId != -1) {
             window.setWindowAnimations(animId);
-            // 添加动画
+            //add animation
         }
         dialog.show();
         WindowManager windowManager = activity.getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
         lp.width = (int) (display.getWidth() * scaleW);
-        // 设置宽度
+        //set width
         if (scaleH > 0) {
             lp.height = (int) (display.getHeight() * scaleH);
         }
@@ -184,7 +180,7 @@ public class CommonTool {
     }
 
     /**
-     * 获取应用详情页面intent（如果找不到要跳转的界面，也可以先把用户引导到系统设置页面）
+     * Get the application details page intent (or direct the user to the system settings page first if you can't find the interface to jump to)
      *
      * @return
      */
@@ -203,18 +199,18 @@ public class CommonTool {
     }
 
     /**
-     * 获取文件的实际路径
+     * Get the actual path to the file
      *
      * @param context
      * @param path
      * @return
      */
     public static String getRealFilePath(Context context, String path) {
-        log("test", "真实位置之前=" + path);
+        log("test", "true=" + path);
         try {
             if (!path.startsWith("content") && !path.startsWith("file")) {
                 path = URLEncoder.encode(path, "utf-8").replaceAll("\\+", "%20");
-                log("test", "2真实位置之前=" + path);
+                log("test", "true=" + path);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -259,7 +255,7 @@ public class CommonTool {
         return data;
     }
     /**
-     * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
+     * Get absolute path of image according to Uri, solve Uri conversion for Android 4.4 or above
      *
      * @param context
      * @param imageUri

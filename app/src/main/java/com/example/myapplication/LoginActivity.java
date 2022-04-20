@@ -25,7 +25,7 @@ import com.example.myapplication.tools.UrlConfig;
 import com.google.gson.Gson;
 import com.lzy.okgo.model.HttpParams;
 
-// 员工登录
+//login
 public class LoginActivity extends AppCompatActivity {
     private TextView title;
     private EditText  telephoneEdit;
@@ -40,31 +40,26 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // 获取SharedPreference对象
+
         pref= PreferenceManager.getDefaultSharedPreferences(this);
         title = findViewById(R.id.title);
-        //用户名的输入框
         telephoneEdit = findViewById(R.id.inputTele);
-        //密码输入框
         passwordEdit = findViewById(R.id.inputPwd);
-        //登录按钮
         rememberPass=(CheckBox)findViewById(R.id.remember_pass);
         loginBtn = findViewById(R.id.loginBtn);
         boolean isRemember=pref.getBoolean("remember_password",false);
         if(isRemember){
-            // 将账号和密码设置到文本框中
             String account=pref.getString("account","");
             String password=pref.getString("password","");
             telephoneEdit.setText(account);
             passwordEdit.setText(password);
             rememberPass.setChecked(true);
         }
-        //事件处理的监听器
+
         loginBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view) {
-                //view.getid()就是获取当前点击的view的id，这个id是你在xml布局文件设置的id
                 if(view.getId()==R.id.loginBtn){
                     String account =  telephoneEdit.getText().toString().trim();
                     String loginPwd = passwordEdit.getText().toString().trim();
@@ -76,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,"Please enter your password",Toast.LENGTH_SHORT).show();
                     }
                     HttpParams params=new HttpParams();
-                    // 服务器端的对应名字
+                    // Corresponding names on the server side
                     params.put("telephone",account);
                     params.put("password",loginPwd);
                   //  params.put("type",0);
@@ -88,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                             Constants.employeeBean=bean.data;
                             if(bean.code==0){
                                 editor=pref.edit();
-                                //检查复选框是否被选中
+                                //Check if the checkbox is checked
                                 if(rememberPass.isChecked()){
                                     editor.putBoolean("remember_password",true);
                                     editor.putString("account",account);
@@ -101,12 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                                 CommonTool.spPutString("isLogin","1");
                                 CommonTool.spPutString("employeebean",new Gson().toJson( Constants.employeeBean));
                                 Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                                // 登录成功 启动主页面的活动
-                          //     Intent intent=new Intent(LoginActivity.this,SearchActivity.class);
+                                // Login successful Launch activity on main page
                                Intent intent=new Intent(LoginActivity.this, MainActivity.class);
 
-
-                                // 传递当前用户的telephone、密码、工号、年龄、姓名、性别、工作部门的id
+                                // trans :telephone、密码、工号、年龄、姓名、性别、工作部门的id
                                 intent.putExtra("telephone",account);
                                 intent.putExtra("password",loginPwd);
                                 intent.putExtra("eID",bean.data.getEid());
@@ -115,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("gender",bean.data.getGender());
                                 intent.putExtra("did",bean.data.getdId());
                                 System.out.println("LoginActivity,intent"+intent);
-                            //    System.out.println("mainActivity,eID"+eID);
+
                                 startActivity(intent);
 
                             }else{
